@@ -1,5 +1,22 @@
 <resources>
-    <string name="app_name">SimpleForm</string>
+    <string name="app_name">MeuPrimeiroAppCompose</string>
     <string name="name">Name</string>
     <string name="hello">Hello, %1$s!</string>
+    <string name="qual_seu_heroi_favorito">Qual seu herói favorito?</string>
+
+    <string-array name="hero_names">
+        <item>Capitão América</item>
+        <item>Hulk</item>
+        <item>Pantera Negra</item>
+        <item>Homem Aranha</item>
+        <item>Homem de Ferro</item>
+    </string-array>
+
+    <string-array name="hero_descriptions">
+        <item>Um supersoldado patriótico com força e agilidade aprimoradas, símbolo de justiça e liderança.</item>
+        <item>Um cientista brilhante que, após exposição à radiação gama, se transforma em um monstro de força incontrolável quando fica com raiva.</item>
+        <item>Rei de Wakanda, combina tecnologia avançada com habilidades sobre-humanas e um traje de vibranium.</item>
+        <item>Um jovem com poderes aracnídeos que equilibra a vida escolar com o dever de proteger Nova York.</item>
+        <item>Um gênio bilionário que combate o crime usando uma armadura tecnológica criada por ele mesmo.</item>
+    </string-array>
 </resources>

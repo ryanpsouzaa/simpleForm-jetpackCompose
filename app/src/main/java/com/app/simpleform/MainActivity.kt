@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.app.simpleform.ui.component.ChooseMyFavoriteHeroScreen
 import com.app.simpleform.ui.component.modifier_demo.InteractionPropertiesDemo
 import com.app.simpleform.ui.theme.SimpleFormTheme
 import com.app.simpleform.ui.theme.Typography
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
             SimpleFormTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     //HelloContent(modifier = Modifier.padding(innerPadding))
-                    InteractionPropertiesDemo(modifier = Modifier.padding(innerPadding))
+                    //InteractionPropertiesDemo(modifier = Modifier.padding(innerPadding))
+                    ChooseMyFavoriteHeroScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
