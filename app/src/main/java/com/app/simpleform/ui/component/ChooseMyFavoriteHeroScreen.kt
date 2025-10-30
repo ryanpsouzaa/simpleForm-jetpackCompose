@@ -2,12 +2,16 @@ package com.app.simpleform.ui.component
 
 import android.R.attr.text
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -38,11 +42,11 @@ import com.app.simpleform.ui.theme.SimpleFormTheme
 
 @Composable
 fun ChooseMyFavoriteHeroScreen(modifier: Modifier = Modifier) {
+    val heroSelectedIndex = rememberSaveable { mutableIntStateOf(-1) }
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(state = rememberScrollState())
     ){
         Text(
             text = "Escolha seu herói favorito",
@@ -50,8 +54,11 @@ fun ChooseMyFavoriteHeroScreen(modifier: Modifier = Modifier) {
         HorizontalDivider(modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp))
-        ChooseHeroList(heroes = createHeroList(),
-            onSelectedHero = { selectedHero ->
+        ChooseHeroList(
+            heroes = createHeroList(),
+            heroSelectedIndex = heroSelectedIndex.value,
+            onSelectedHero = { index, selectedHero ->
+                heroSelectedIndex.value = index
                 //dispara uma acao qualquer...
              }
         )
@@ -59,25 +66,43 @@ fun ChooseMyFavoriteHeroScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ChooseHeroList(heroes: List<Hero>, onSelectedHero: (Hero) -> Unit) {
-    val heroSelectedIndex = rememberSaveable { mutableIntStateOf(-1) }
-
-    heroes.forEachIndexed { index, hero ->
-        CardHero(hero,
-            isSelected = heroSelectedIndex.value == index,
-            onClick = {
-                heroSelectedIndex.value = index
-                onSelectedHero(hero)
-            })
+fun ChooseHeroList(
+    modifier: Modifier = Modifier,
+    heroes: List<Hero>,
+    heroSelectedIndex: Int ,
+    onSelectedHero: (index: Int, selectedHero: Hero) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ){
+        itemsIndexed(items = heroes, key ={ index, hero -> hero.hashCode() }){
+            index, hero ->
+            CardHero(
+                modifier = modifier,
+                hero = hero,
+                isSelected = heroSelectedIndex == index,
+                onClick = {
+                    onSelectedHero(index, hero)
+                }
+            )
+        }
     }
+//    heroes.forEachIndexed { index, hero ->
+//        CardHero(hero,
+//            isSelected = heroSelectedIndex == index,
+//            onClick = {
+//                onSelectedHero(index, hero)
+//            })
+//    }
 }
 
 @Composable
 fun CardHero(hero: Hero, modifier: Modifier = Modifier, isSelected: Boolean, onClick: () -> Unit) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
